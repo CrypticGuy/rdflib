@@ -22,6 +22,7 @@ underlying Graph:
 """
 import re
 from fractions import Fraction
+from rfc3987 import match
 
 __all__ = [
     "bind",
@@ -85,10 +86,13 @@ _invalid_uri_chars = '<>" {}|\\^`'
 
 
 def _is_valid_uri(uri: str) -> bool:
-    for c in _invalid_uri_chars:
-        if c in uri:
-            return False
-    return True
+    # for c in _invalid_uri_chars:
+    #     if c in uri:
+    #         return False
+    # return True
+    if match(str(uri), 'IRI_reference') is not None:
+        return True
+    return False
 
 
 _lang_tag_regex = compile("^[a-zA-Z]+(?:-[a-zA-Z0-9]+)*$")
